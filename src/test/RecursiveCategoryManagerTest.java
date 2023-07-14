@@ -1,17 +1,28 @@
 package test;
 
 import co.model.Category;
-import co.service.CategoryManager;
+import co.service.CategoryManagerInterface;
+import co.service.RecursiveCategoryManager;
+
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class CategoryManagerTest {
+class RecursiveCategoryManagerTest {
+
+    private CategoryManagerInterface categoryManager;
+    static Logger logger = Logger.getLogger(RecursiveCategoryManagerTest.class.getName());
+
+    @org.junit.jupiter.api.BeforeEach
+    void setUp() {
+        logger.info("setUp called.");
+        categoryManager = new RecursiveCategoryManager();
+    }
 
     @org.junit.jupiter.api.Test
     void keywords() {
-        CategoryManager categoryManager = new CategoryManager();
         Category furniture = new Category();
         furniture.setName("Furniture");
         furniture.getKeywords().add("Furniture");
@@ -27,10 +38,8 @@ class CategoryManagerTest {
 
     @org.junit.jupiter.api.Test
     void gettingDefaultKeywords() {
-        CategoryManager categoryManager = new CategoryManager();
         Category homeApp = new Category();
         homeApp.setName("Home appliances");
-        //homeApp.getKeywords().add("homeApp");
         assertTrue(categoryManager.addCategory(homeApp, null));
 
         Category majorApp = new Category();
